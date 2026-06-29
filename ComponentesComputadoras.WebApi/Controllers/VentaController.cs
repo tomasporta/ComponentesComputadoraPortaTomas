@@ -27,7 +27,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
         }
 
         [HttpGet("All")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult All()
         {
             var ventas = _context.Ventas
@@ -38,7 +38,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult GetById(int id)
         {
             var venta = _context.Ventas
@@ -51,7 +51,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult Crear([FromBody] VentaRequestDto ventaRequestDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

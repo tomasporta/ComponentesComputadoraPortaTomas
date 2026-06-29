@@ -29,9 +29,9 @@ namespace ComponentesComputadoras.WebApi.Controllers
             _mapper = mapper;
         }
 
-        //  Solo Admin puede ver todos los clientes
+        
         [HttpGet("All")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult All()
         {
             var clientes = _cliente.GetAll();
@@ -39,9 +39,9 @@ namespace ComponentesComputadoras.WebApi.Controllers
             return Ok(dto);
         }
 
-        //  Obtener cliente por Id (solo Admin)
+        
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult GetById(int id)
         {
             var cliente = _cliente.GetById(id);
@@ -51,7 +51,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
             return Ok(dto);
         }
 
-        //  Crear cliente (usuarios autenticados)
+        
         [HttpPost]
         [Authorize]
         public IActionResult Crear([FromBody] ClienteRequestDto clienteRequestDto)
@@ -66,11 +66,11 @@ namespace ComponentesComputadoras.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
       
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult Borrar(int id)
         {
             var clienteBack = _cliente.GetById(id);

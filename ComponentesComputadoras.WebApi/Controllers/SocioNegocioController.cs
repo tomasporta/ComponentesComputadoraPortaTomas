@@ -30,7 +30,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
 
         //  Solo Admin puede ver todos los socios
         [HttpGet("All")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult All()
         {
             var socios = _context.SociosNegocio
@@ -44,7 +44,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
 
         //  Obtener socio por Id
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult GetById(int id)
         {
             var socio = _context.SociosNegocio
@@ -88,7 +88,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
 
         //  Borrar socio (solo Admin)
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult Borrar(int id)
         {
             var socio = _context.SociosNegocio.Find(id);

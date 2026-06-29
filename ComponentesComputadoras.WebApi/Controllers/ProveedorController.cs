@@ -30,7 +30,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
         }
 
         //  Solo Admin puede ver todos los proveedores
-        [HttpGet("All")]
+        [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult All()
         {
@@ -41,7 +41,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
 
         //  Obtener proveedor por Id (solo Admin)
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult GetById(int id)
         {
             var proveedor = _proveedor.GetById(id);
@@ -53,7 +53,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
 
         //  Crear proveedor (solo Admin)
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult Crear([FromBody] ProveedorRequestDto proveedorRequestDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);

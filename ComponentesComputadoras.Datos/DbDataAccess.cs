@@ -40,23 +40,22 @@ namespace ComponentesComputadoras.Datos
 
             
             modelBuilder.Entity<CompraDetalle>()
-     .HasOne(cd => cd.Compra)
-     .WithMany(c => c.Detalles)
-     .HasForeignKey(cd => cd.CompraId)
-     .OnDelete(DeleteBehavior.Cascade);   
+                .HasOne(cd => cd.Compra)
+                .WithMany(c => c.Detalles)
+                .HasForeignKey(cd => cd.CompraId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<CompraDetalle>()
                 .HasOne(cd => cd.Producto)
                 .WithMany()
                 .HasForeignKey(cd => cd.ProductoId)
-                .OnDelete(DeleteBehavior.Restrict);  
-
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<VentaDetalle>()
-     .HasOne(vd => vd.Venta)
-     .WithMany(v => v.Detalles)
-     .HasForeignKey(vd => vd.VentaId)
-     .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(vd => vd.Venta)
+                .WithMany(v => v.Detalles)
+                .HasForeignKey(vd => vd.VentaId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<VentaDetalle>()
                 .HasOne(vd => vd.Producto)
@@ -64,17 +63,15 @@ namespace ComponentesComputadoras.Datos
                 .HasForeignKey(vd => vd.ProductoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
-            // Relaciones adicionales de Producto
             modelBuilder.Entity<Producto>()
-     .HasOne(p => p.Proveedor)
-     .WithMany(pr => pr.Productos) 
-     .HasForeignKey(p => p.ProveedorId)
-     .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(p => p.Proveedor)
+                .WithMany(pr => pr.Productos)
+                .HasForeignKey(p => p.ProveedorId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Producto>()
                 .HasOne(p => p.TipoProducto)
-                .WithMany(tp => tp.Productos) 
+                .WithMany(tp => tp.Productos)
                 .HasForeignKey(p => p.TipoProductoId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
