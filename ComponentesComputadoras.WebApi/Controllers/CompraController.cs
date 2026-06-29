@@ -27,7 +27,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
         }
 
         [HttpGet("All")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult All()
         {
             var compras = _context.Compras
@@ -38,7 +38,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult GetById(int id)
         {
             var compra = _context.Compras

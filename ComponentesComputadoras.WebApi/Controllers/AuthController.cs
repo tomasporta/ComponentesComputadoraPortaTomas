@@ -2,8 +2,10 @@
 using ComponentesComputadoras.Entities;
 using ComponentesComputadoras.Entities.MicrosoftIdentity;
 using ComponentesComputadoras.Servicios.AuthServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace ComponentesComputadoras.WebApi.Controllers
 {
@@ -20,13 +22,41 @@ namespace ComponentesComputadoras.WebApi.Controllers
             _tokenHandler = tokenHandler;
         }
 
+        // Endpoint de registro
+
+        [HttpPost("register")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = new User
+            {
+                UserName = request.Email,
+                Email = request.Email,
+                Nombres = request.Nombres,
+                Apellidos = request.Apellidos
+            };
+
+            var result = await _userManager.CreateAsync(user, request.Password);
+
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
+
+            return Ok("Usuario creado correctamente");
+        }
+
+
+        // Endpoint de login
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
             if (user != null && await _userManager.CheckPasswordAsync(user, request.Password))
             {
-                //  Obtener roles del usuario
+                // Obtener roles del usuario
                 var roles = await _userManager.GetRolesAsync(user);
 
                 var parametros = new TokensParameters
@@ -35,7 +65,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
                     UserName = user.UserName,
                     Email = user.Email,
                     PasswordHash = user.PasswordHash,
-                    Roles = roles // <-- propiedad nueva en TokensParameters
+                    Roles = roles
                 };
 
                 var token = _tokenHandler.GenerateJwtTokens(parametros);
@@ -43,8 +73,29 @@ namespace ComponentesComputadoras.WebApi.Controllers
             }
             return Unauthorized("Credenciales inválidas");
         }
-
     }
+
+    
+  
+    
+        public class RegisterRequestDto
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [MinLength(6)]
+        public string Password { get; set; }
+
+        [Required]
+        public string Nombres { get; set; }
+
+        [Required]
+        public string Apellidos { get; set; }
+    }
+
+}
 
     public class LoginRequestDto
     {
@@ -52,6 +103,3 @@ namespace ComponentesComputadoras.WebApi.Controllers
         public string? Password { get; set; }
     }
 
-   
-  
-}

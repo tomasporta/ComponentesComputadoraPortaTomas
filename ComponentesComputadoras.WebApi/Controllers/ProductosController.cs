@@ -31,7 +31,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
         }
 
         [HttpGet("All")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult All()
         {
             var productos = _context.Productos
@@ -44,7 +44,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult GetById(int id)
         {
             var producto = _producto.GetById(id);
@@ -55,7 +55,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult Crear([FromBody] ProductoRequestDto productoRequestDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -79,7 +79,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
 
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult Borrar(int id)
         {
             var productoBack = _producto.GetById(id);

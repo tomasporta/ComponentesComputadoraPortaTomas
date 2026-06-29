@@ -28,7 +28,7 @@
             }
 
             [HttpGet("All")]
-            [Authorize(Roles = "Admin")]
+            [Authorize]
             public IActionResult All()
             {
                 var detalles = _context.CompraDetalles

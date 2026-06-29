@@ -28,8 +28,8 @@ namespace ComponentesComputadoras.WebApi.Controllers
         }
 
         //  Obtener todos los tipos de producto
-        [HttpGet("All")]
-        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        [Authorize]
         public IActionResult All()
         {
             var tipos = _tipoProducto.GetAll();
@@ -39,7 +39,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
 
         //  Obtener tipo de producto por Id
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult GetById(int id)
         {
             var tipo = _tipoProducto.GetById(id);
@@ -51,7 +51,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
 
         //  Crea tipo de producto
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult Crear([FromBody] TipoProductoRequestDto tipoProductoRequestDto)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -66,7 +66,7 @@ namespace ComponentesComputadoras.WebApi.Controllers
 
         //  Borrar tipo de producto
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public IActionResult Borrar(int id)
         {
             var tipoBack = _tipoProducto.GetById(id);
